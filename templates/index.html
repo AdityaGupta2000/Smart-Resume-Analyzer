@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Resume Analyzer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <div class="max-w-xl mx-auto mt-20 p-8 bg-white shadow-lg rounded-xl">
+    <h1 class="text-3xl font-bold mb-6 text-center">Smart Resume Analyzer</h1>
+
+    <form action="/" method="POST" enctype="multipart/form-data" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Upload Resume</label>
+        <input name="resume" type="file" class="mt-1 block w-full border rounded-md px-3 py-2" required>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Upload Job Description</label>
+        <input name="jd" type="file" class="mt-1 block w-full border rounded-md px-3 py-2" required>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-semibold">
+          Submit
+        </button>
+      </div>
+    </form>
+
+    {% if result %}
+      <div class="mt-8 prose prose-sm max-w-none">
+        <h2 class="text-xl font-semibold mb-2">Assistant Analysis</h2>
+        {% for item in result %}
+          {% if item.role == 'assistant' %}
+            <div class="bg-white border border-gray-200 p-4 rounded-md shadow-sm">
+              <div class="mt-2 text-gray-800 whitespace-pre-line" id="assistant-text">
+                {{ item.text | safe }}
+              </div>
+            </div>
+
+            <!-- PDF Download Form -->
+            <form method="POST" action="/download">
+              <textarea name="content" style="display:none;">{{ item.text }}</textarea>
+              <button type="submit" class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-semibold">
+                Download as PDF
+              </button>
+            </form>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>
