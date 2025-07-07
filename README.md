@@ -1,6 +1,5 @@
 # Smart-Resume-Analyzer
 
-# Smart Resume Analyzer
 
 This is a web-based Smart Resume Analyzer built using Flask. It takes a resume and a job description as input, analyzes their alignment, and provides a detailed match summary along with a downloadable PDF.
 
